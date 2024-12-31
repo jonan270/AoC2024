@@ -13,7 +13,6 @@ function lines_from(file)
     return lines
 end
 
-
 local lines = lines_from("input.txt")
 if next(lines) ~= nil then
     local lefts = {}
@@ -28,9 +27,27 @@ if next(lines) ~= nil then
     table.sort(lefts)
     table.sort(rights)
 
+    -- Part 1
     local sum = 0
     for i=1,#lines do
         sum = sum + math.abs(lefts[i] - rights[i])
     end
-    print(sum)
+    print("Part 1: " .. sum)
+
+    -- Part 2
+    local similarity_score = 0
+    for _,left_value in pairs(lefts) do
+        local multiplier = 0
+        for _,right_value in pairs(rights) do
+            if right_value == left_value then
+                multiplier = multiplier + 1
+            elseif right_value > left_value then
+                break
+            end
+        end
+        similarity_score = similarity_score + left_value * multiplier
+    end
+    print("Part 2: " .. similarity_score)
+else
+    print("Could not open file!!")
 end
